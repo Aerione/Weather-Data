@@ -42,15 +42,11 @@ namespace Väderdata___Inlämning
                             int hours = int.Parse(match.Groups["hours"].Value);
                             int minutes = int.Parse(match.Groups["minutes"].Value);
                             int seconds = int.Parse(match.Groups["seconds"].Value);
-                            double temp = double.Parse(match.Groups["temp"].Value, CultureInfo.InvariantCulture);
+                            float temp = float.Parse(match.Groups["temp"].Value, CultureInfo.InvariantCulture);
                             int humidity = int.Parse(match.Groups["humidity"].Value);
 
                             DateTime dateTime = new DateTime(year, month, day, hours, minutes, seconds);
 
-                            //Console.WriteLine("Date and Time: {0}-{1}-{2} {3}:{4}:{5}", year, month, day, hours, minutes, seconds);
-                            //Console.WriteLine("Indicator: " + indicator);
-                            //Console.WriteLine("Temperature: " + temp);
-                            //Console.WriteLine("Humidity: " + humidity);
 
                             dataList.Add(new Data
                             {

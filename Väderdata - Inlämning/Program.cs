@@ -20,12 +20,20 @@ class Program
             }
         }
 
+
         uDataList = TemperatureData.OutputData(tempData, 1);
 
-        foreach (Data data in uDataList)
-        {
-            Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
-        }
+        float averageTemperature = uDataList
+            .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)
+            .Average(data => data.Temperature);
+
+        Console.WriteLine("Average Value = " + averageTemperature);
+        Console.ReadKey();
+
+        //foreach (Data data in uDataList)
+        //{
+        //    Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
+        //}
 
     }
 }
