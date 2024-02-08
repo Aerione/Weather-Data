@@ -9,9 +9,9 @@ namespace Meny
 {
     internal class Meny
     {
-        public void Menu()
+        public void Menu(List<Data> tempData)
         {
-            string filePath = "../../../Files/tempData5.txt";
+            string filePath = "../../../Files/TempData.txt";
 
 
             bool exit = false;
@@ -35,6 +35,28 @@ namespace Meny
                         Console.WriteLine("Ange ett datum (ÅÅÅÅ-MM-DD): ");
                         string inputDate = Console.ReadLine();
 
+                        if (DateTime.TryParse(inputDate, out DateTime chosenDate))
+                        {
+                            var measurementsForDate = tempData
+                                .Where(m => m.DateTime.Date == chosenDate.Date)
+                                .ToList();
+
+                            if (measurementsForDate.Any())
+                            {
+                                double averageTemperature = measurementsForDate.Average(m => m.Temperature);
+                                double averageHumidity = measurementsForDate.Average(m => m.Humidity);
+                                Console.WriteLine($"Medeltemperatur för {chosenDate.ToShortDateString()}: {averageTemperature} °C");
+                                Console.WriteLine($"Medelluftfuktighet för {chosenDate.ToShortDateString()}: {averageHumidity}%");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Inga mätningar finns för {chosenDate.ToShortDateString()}.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ogiltigt datumformat. Var vänlig ange datumet i formatet ÅÅÅÅ-MM-DD.");
+                        }
                         break;
                     case "2":
 
@@ -64,7 +86,7 @@ namespace Meny
 
         public void ShowAverageTemperatureAndHumidityForDate(DateTime chosenDate)
         {
-
+        
         }
 
 

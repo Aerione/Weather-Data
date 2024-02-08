@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Väderdata___Inlämning
 {
-    internal class Data
+    public class Data
     {
         public DateTime DateTime { get; set; }
         public float Temperature { get; set; }
