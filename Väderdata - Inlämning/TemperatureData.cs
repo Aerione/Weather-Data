@@ -15,7 +15,7 @@ namespace Väderdata___Inlämning
         {
             string location = "";
             List<Data> dataList = new List<Data>();
-            Regex tempRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01]) (?<hours>([01]\d|2[0-3])):(?<minutes>[0-5]\d):(?<seconds>[0-5]\d),(?<indicator>\w+),(?<temp>[\d.]+),(?<humidity>\d+)");
+            Regex tempRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01]) (?<hours>([01]\d|2[0-3])):(?<minutes>[0-5]\d):(?<seconds>[0-5]\d),(?<indicator>\w+),(?<temp>-?([0-9]\d*(\.\d+)?)),(?<humidity>(?:100|\d{1,2}))");
 
             if (indicator == 1)
             {

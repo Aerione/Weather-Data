@@ -9,7 +9,7 @@ namespace Meny
 {
     internal class Meny
     {
-        static void Main(string[] args)
+        public void Menu()
         {
             string filePath = "../../../Files/tempData5.txt";
 
