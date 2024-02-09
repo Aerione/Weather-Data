@@ -13,9 +13,7 @@ namespace Meny
         public void ShowMenu()
         {
             Regex dateRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01])");
-            string filePath = ".. /../../Files/tempData5.txt";
-
-
+            int indicator;
             bool exit = false;
             while (!exit)
             {
@@ -32,9 +30,20 @@ namespace Meny
 
 
                 string choice = Console.ReadLine();
-
+                Console.WriteLine("Önskar du se Ute eller Inne temperatur?");
+                string vald = Console.ReadLine().ToUpper();
+                if (vald == "UTE")
+                {
+                    indicator = 1;
+                }
+                else
+                {
+                    indicator = 2;
+                }
                 switch (choice)
                 {
+                  
+
                     case "1":
                         Console.WriteLine("Ange ett datum: (YYYY-MM-DD)");
                         string input = Console.ReadLine();
@@ -42,7 +51,7 @@ namespace Meny
                         if (match.Success)
                         {
                             DateTime date = DateTime.ParseExact(input, "yyyy-MM-dd", null);
-                            Tuple<float, int> values = TemperatureData.AverageValuesOfDay(date, TemperatureData.OutputData(TemperatureData.GetTempData(), 1));
+                            Tuple<float, int> values = TemperatureData.AverageValuesOfDay(date, TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
                             Console.WriteLine("Medeltemp är: " + values.Item1);
                             Console.WriteLine("Medelluftfuktigheten är: " + values.Item2);
                         }
@@ -51,14 +60,19 @@ namespace Meny
                             Console.WriteLine("Fel inmatning.");
                         }
                         Console.WriteLine();
-                        Console.WriteLine("Tryck valfri knapp för att prova igen");
+                        Console.WriteLine("Tryck på valfri knapp");
                         Console.ReadKey();
+                        Console.Clear();
                         break;
                     case "2":
-
+                        TemperatureData.PrintColdestDay(TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case "3":
-
+                        TemperatureData.PrintHumidityDay(TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case "4":
 
@@ -80,44 +94,6 @@ namespace Meny
 
             }
         }
-
-
-        //public void ShowAverageTemperatureAndHumidityForDate(DateTime chosenDate)
-        //{
-
-        //}
-
-
-
-        //public static void SortByTemperature(List<Data> measurements)
-        //{
-
-        //}
-
-        //public static void SortByHumidity(List<Data> measurements)
-        //{
-
-        //}
-
-        //public static void SortByMoldRisk(List<Data> measurements)
-        //{
-
-        //}
-
-        //public static void ShowAutumnDate(List<Data> measurements)
-        //{
-
-        //}
-
-        //public static void ShowMildWinterDate(List<Data> measurements)
-        //{
-
-        //}
-
-        //private static void DisplayMeasurements(List<Data> measurements)
-        //{
-
-        //}
 
     }
 }
