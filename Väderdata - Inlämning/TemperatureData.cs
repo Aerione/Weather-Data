@@ -10,7 +10,6 @@ namespace Väderdata___Inlämning
 {
     internal class TemperatureData
     {
-
         public static List<Data> OutputData(List<string> tempData, int indicator)
         {
             string location = "";
@@ -55,6 +54,105 @@ namespace Väderdata___Inlämning
 
             }
             return dataList;
+        }
+
+
+        public static List<string> GetTempData() 
+        {
+            List<string> dataList = new List<string>();
+
+            string filePath = "../../../Files/tempData.txt";
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    dataList.Add(line);
+                }
+            }
+
+            return dataList;
+        }
+
+        public static System.Tuple<float, int> AverageValuesOfDay(DateTime date, List<Data> tempList)
+        {
+            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+            Tuple<float, int> valueTuple = new Tuple<float, int>(0,0);
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+                //Mold index not totally correct
+
+                return new
+                {
+                    DateStamp = group.Key,
+                    MeanTemperature = meanTemperature,
+                    MeanHumidity = meanHumidity,
+                };
+            });
+
+            foreach (var item in meanValues)
+            {
+                if (item.DateStamp.Year == date.Year && item.DateStamp.Month == date.Month && item.DateStamp.Date == date.Date)
+                {
+                    Tuple<float, int> returnValue = new Tuple<float, int>(item.MeanTemperature, item.MeanHumidity);
+                    return returnValue;
+                }
+            }
+            Console.WriteLine("Varning, inget värde finns för angivet datum.");
+            return valueTuple;
+        }
+
+
+        public static void PrintAverage()
+        {
+           List<Data> uDataList = new List<Data>();
+
+
+            uDataList = TemperatureData.OutputData(GetTempData(), 1);
+
+            //float averageTemperature = uDataList
+            //    .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)
+            //    .Average(data => data.Temperature);
+
+            //Console.WriteLine("Average Value = " + averageTemperature);
+            //Console.ReadKey();
+
+
+            var groupedEntries = uDataList.GroupBy(e => e.DateTime.Date);
+
+            // Calculate mean values for each property for each date stamp
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+                //Mold index not totally correct
+                double moldIndex = ((meanHumidity - 78) * ((meanTemperature / 15) / 0.22));
+
+                return new
+                {
+                    DateStamp = group.Key,
+                    MeanTemperature = meanTemperature,
+                    MeanHumidity = meanHumidity,
+                    MoldIndex = moldIndex
+                };
+            });
+
+            foreach (var item in meanValues)
+            {
+                Console.WriteLine("Date: " + item.DateStamp.Year + ":" + item.DateStamp.Month + ":" + item.DateStamp.Day);
+                Console.WriteLine("Mean Temperature: " + item.MeanTemperature);
+                Console.WriteLine("Mean Humidity " + item.MeanHumidity);
+                Console.WriteLine("Mold Index " + item.MoldIndex);
+                Console.WriteLine();
+            }
+
+            //foreach (Data data in uDataList)
+            //{
+            //    Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
+            //}
         }
     }
 }
