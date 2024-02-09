@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Väderdata - Inlämning/Meny.cs
+/Väderdata - Inlämning/Program.cs
