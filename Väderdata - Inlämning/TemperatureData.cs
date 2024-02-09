@@ -56,7 +56,6 @@ namespace Väderdata___Inlämning
             return dataList;
         }
 
-
         public static List<string> GetTempData() 
         {
             List<string> dataList = new List<string>();
@@ -75,7 +74,7 @@ namespace Väderdata___Inlämning
             return dataList;
         }
 
-        public static System.Tuple<float, int> AverageValuesOfDay(DateTime date, List<Data> tempList)
+        public static Tuple<float, int> AverageValuesOfDay(DateTime date, List<Data> tempList)
         {
             var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
             Tuple<float, int> valueTuple = new Tuple<float, int>(0,0);
@@ -83,8 +82,6 @@ namespace Väderdata___Inlämning
             {
                 float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
                 int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
-                //Mold index not totally correct
-
                 return new
                 {
                     DateStamp = group.Key,
@@ -105,6 +102,60 @@ namespace Väderdata___Inlämning
             return valueTuple;
         }
 
+        public static void PrintColdestDay(List<Data> tempList)
+        {
+            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+
+                return new
+                {
+                    DateStamp = group.Key,
+                    MeanTemperature = meanTemperature,
+                    MeanHumidity = meanHumidity,
+                };
+            });
+
+            var sortedMeans = meanValues.OrderBy(x => x.MeanTemperature);
+
+            foreach (var meanValue in sortedMeans)
+            {
+                Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
+                Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
+                Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
+                Console.WriteLine();
+            }
+        }
+
+        public static void PrintHumidityDay(List<Data> tempList)
+        {
+            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+
+                return new
+                {
+                    DateStamp = group.Key,
+                    MeanTemperature = meanTemperature,
+                    MeanHumidity = meanHumidity,
+                };
+            });
+
+            var sortedMeans = meanValues.OrderBy(x => x.MeanHumidity);
+
+            // Print sorted mean values
+            foreach (var meanValue in sortedMeans)
+            {
+                Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
+                Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
+                Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
+                Console.WriteLine();
+            }
+        }
 
         public static void PrintAverage()
         {
@@ -119,7 +170,6 @@ namespace Väderdata___Inlämning
 
             //Console.WriteLine("Average Value = " + averageTemperature);
             //Console.ReadKey();
-
 
             var groupedEntries = uDataList.GroupBy(e => e.DateTime.Date);
 
