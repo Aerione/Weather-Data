@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,10 +13,11 @@ namespace Väderdata___Inlämning
         public float Temperature { get; set; }
         public int Humidity { get; set; }
 
-        public double MoldIndex { get; set; }
-        public Data()
+        public Data(DateTime DateTime, float Temperature, int Humidty)
         {
-            MoldIndex = ((Humidity - 78) * (Temperature / 15) / 0.22);
+            this.DateTime = DateTime;
+            this.Temperature = Temperature;
+            this.Humidity = Humidty;
         }
     }
 }

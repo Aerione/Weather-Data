@@ -47,13 +47,8 @@ namespace Väderdata___Inlämning
 
                             DateTime dateTime = new DateTime(year, month, day, hours, minutes, seconds);
 
+                            dataList.Add(new Data(dateTime, temp, humidity));
 
-                            dataList.Add(new Data
-                            {
-                                DateTime = dateTime,
-                                Temperature = temp,
-                                Humidity = humidity
-                            });
                         }
                     }
                 }
