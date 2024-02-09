@@ -25,14 +25,30 @@ namespace Väderdata___Inlämning
             }
         }
 
-        public static void WriteAll(string fileName, string text)
+        public static void WriteAll(string fileName)
         {
             using (StreamWriter streamWriter = new StreamWriter(fileName))
             {
-                streamWriter.WriteLine(text);
-                for (int i  = 0; i < 10; i++)
+                streamWriter.WriteLine("Medeltemperatur sorterad efter månad (Ute):");
+
+                List<(DateTime, float, int)> monthlyMeanValues = TemperatureData.SortMeanValuesByMonth(TemperatureData.OutputData(1));
+
+                foreach (var meanValues in monthlyMeanValues)
                 {
-                    streamWriter.WriteLine(i);
+                    streamWriter.WriteLine("Månad: " + meanValues.Item1.Month);   
+                    streamWriter.WriteLine("Temperatur: " + meanValues.Item2);
+                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3);
+                }
+
+                streamWriter.WriteLine("Medelfuktighet sorterad efter månad (Inne):");
+
+                List<(DateTime, float, int)> monthlyMeanValues2 = TemperatureData.SortMeanValuesByMonth(TemperatureData.OutputData(2));
+
+                foreach (var meanValues in monthlyMeanValues2)
+                {
+                    streamWriter.WriteLine("Månad: " + meanValues.Item1.Month);
+                    streamWriter.WriteLine("Temperatur: " + meanValues.Item2);
+                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3);
                 }
             }
         }

@@ -10,10 +10,23 @@ namespace Väderdata___Inlämning
 {
     internal class TemperatureData
     {
-        public static List<Data> OutputData(List<string> tempData, int indicator)
+        public static List<Data> OutputData(int indicator)
         {
             string location = "";
+            string filePath = "../../../Files/tempData.txt";
+
             List<Data> dataList = new List<Data>();
+            List<string> tempData = new List<string>();
+
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    tempData.Add(line);
+                }
+            }
+
             Regex tempRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01]) (?<hours>([01]\d|2[0-3])):(?<minutes>[0-5]\d):(?<seconds>[0-5]\d),(?<indicator>\w+),(?<temp>-?([0-9]\d*(\.\d+)?)),(?<humidity>(?:100|\d{1,2}))");
 
             if (indicator == 1)
@@ -56,28 +69,10 @@ namespace Väderdata___Inlämning
             return dataList;
         }
 
-        public static List<string> GetTempData() 
-        {
-            List<string> dataList = new List<string>();
-
-            string filePath = "../../../Files/tempData.txt";
-
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    dataList.Add(line);
-                }
-            }
-
-            return dataList;
-        }
-
         public static Tuple<float, int> AverageValuesOfDay(DateTime date, List<Data> tempList)
         {
             var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
-            Tuple<float, int> valueTuple = new Tuple<float, int>(0,0);
+            Tuple<float, int> valueTuple = new Tuple<float, int>(0, 0);
             var meanValues = groupedEntries.Select(group =>
             {
                 float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
@@ -157,12 +152,41 @@ namespace Väderdata___Inlämning
             }
         }
 
+
+        public static List<(DateTime DateStamp, float MeanTemperature, int MeanHumidity)> SortMeanValuesByDay(List<Data> tempList)
+        {
+            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+
+                return (DateStamp: group.Key, MeanTemperature: meanTemperature, MeanHumidity: meanHumidity);
+            });
+
+            return meanValues.OrderBy(x => x.DateStamp.Date).ToList();
+        }
+
+        public static List<(DateTime DateStamp, float MeanTemperature, int MeanHumidity)> SortMeanValuesByMonth(List<Data> tempList)
+        {
+            var groupedEntries = tempList.GroupBy(e => new DateTime(e.DateTime.Year, e.DateTime.Month, 1));
+
+            var meanValues = groupedEntries.Select(group =>
+            {
+                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+                return (DateStamp: group.Key, MeanTemperature: meanTemperature, MeanHumidity: meanHumidity);
+            });
+
+            return meanValues.ToList();
+        }
+
         public static void PrintAverage()
         {
-           List<Data> uDataList = new List<Data>();
+            List<Data> uDataList = new List<Data>();
 
 
-            uDataList = TemperatureData.OutputData(GetTempData(), 1);
+            uDataList = TemperatureData.OutputData(1);
 
             //float averageTemperature = uDataList
             //    .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)

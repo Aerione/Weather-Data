@@ -1,11 +1,44 @@
-testtesttesttest
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
+Medeltemperatur sorterad efter månad (Ute):
+Månad: 6
+Temperatur: 15,847579
+Humidity 53
+Månad: 7
+Temperatur: 20,244614
+Humidity 52
+Månad: 8
+Temperatur: 18,072746
+Humidity 48
+Månad: 9
+Temperatur: 16,156067
+Humidity 60
+Månad: 10
+Temperatur: 8,177444
+Humidity 64
+Månad: 11
+Temperatur: 3,3119898
+Humidity 83
+Månad: 12
+Temperatur: 2,5104659
+Humidity 77
+Medeltemperatur sorterad efter månad (Inne):
+Månad: 6
+Temperatur: 24,701122
+Humidity 28
+Månad: 7
+Temperatur: 26,283714
+Humidity 41
+Månad: 8
+Temperatur: 25,567415
+Humidity 34
+Månad: 9
+Temperatur: 23,311342
+Humidity 41
+Månad: 10
+Temperatur: 22,415539
+Humidity 27
+Månad: 11
+Temperatur: 22,780891
+Humidity 19
+Månad: 12
+Temperatur: 21,836422
+Humidity 15

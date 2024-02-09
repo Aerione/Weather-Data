@@ -8,7 +8,7 @@ class Program
     static void Main()
     {
         string outputPath = "../../../Files/TextFile.txt";
-        ReadWriteFile.WriteAll(outputPath, "testtesttesttest");
+        ReadWriteFile.WriteAll(outputPath);
         //Meny.Meny meny = new Meny.Meny();
         //meny.ShowMenu();
         //TemperatureData.PrintAverage();

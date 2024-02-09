@@ -52,7 +52,7 @@ namespace Meny
                         if (match.Success)
                         {
                             DateTime date = DateTime.ParseExact(input, "yyyy-MM-dd", null);
-                            Tuple<float, int> values = TemperatureData.AverageValuesOfDay(date, TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
+                            Tuple<float, int> values = TemperatureData.AverageValuesOfDay(date, TemperatureData.OutputData(indicator));
                             Console.WriteLine("Medeltemp är: " + values.Item1);
                             Console.WriteLine("Medelluftfuktigheten är: " + values.Item2);
                         }
@@ -66,12 +66,12 @@ namespace Meny
                         Console.Clear();
                         break;
                     case "2":
-                        TemperatureData.PrintColdestDay(TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
+                        TemperatureData.PrintColdestDay(TemperatureData.OutputData(indicator));
                         Console.ReadKey();
                         Console.Clear();
                         break;
                     case "3":
-                        TemperatureData.PrintHumidityDay(TemperatureData.OutputData(TemperatureData.GetTempData(), indicator));
+                        TemperatureData.PrintHumidityDay(TemperatureData.OutputData(indicator));
                         Console.ReadKey();
                         Console.Clear();
                         break;
