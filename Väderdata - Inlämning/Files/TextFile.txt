@@ -1,44 +1,47 @@
 Medeltemperatur sorterad efter månad (Ute):
 Månad: 6
 Temperatur: 15,847579
-Humidity 53
+Fuktighet 53
 Månad: 7
 Temperatur: 20,244614
-Humidity 52
+Fuktighet 52
 Månad: 8
 Temperatur: 18,072746
-Humidity 48
+Fuktighet 48
 Månad: 9
 Temperatur: 16,156067
-Humidity 60
+Fuktighet 60
 Månad: 10
 Temperatur: 8,177444
-Humidity 64
+Fuktighet 64
 Månad: 11
 Temperatur: 3,3119898
-Humidity 83
+Fuktighet 83
 Månad: 12
 Temperatur: 2,5104659
-Humidity 77
-Medeltemperatur sorterad efter månad (Inne):
+Fuktighet 77
+Medelfuktighet sorterad efter månad (Inne):
 Månad: 6
 Temperatur: 24,701122
-Humidity 28
+Fuktighet 28
 Månad: 7
 Temperatur: 26,283714
-Humidity 41
+Fuktighet 41
 Månad: 8
 Temperatur: 25,567415
-Humidity 34
+Fuktighet 34
 Månad: 9
 Temperatur: 23,311342
-Humidity 41
+Fuktighet 41
 Månad: 10
 Temperatur: 22,415539
-Humidity 27
+Fuktighet 27
 Månad: 11
 Temperatur: 22,780891
-Humidity 19
+Fuktighet 19
 Månad: 12
 Temperatur: 21,836422
-Humidity 15
+Fuktighet 15
+2016-10-04 var första meteorogiska höstdagen med medeltemperaturen 8,4 C.
+Datum för meteorogiska årstider:
+Formeln för mögelindexen: ((luftfuktighet -78) * (Temp/15))/0,22

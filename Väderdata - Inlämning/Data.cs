@@ -12,7 +12,6 @@ namespace Väderdata___Inlämning
         public DateTime DateTime { get; set; }
         public float Temperature { get; set; }
         public int Humidity { get; set; }
-
         public Data(DateTime DateTime, float Temperature, int Humidty)
         {
             this.DateTime = DateTime;

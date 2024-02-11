@@ -2,15 +2,15 @@
 using System.Text.RegularExpressions;
 using Väderdata___Inlämning;
 using Meny;
+using System.Text;
 
 class Program
 {
     static void Main()
     {
-        string outputPath = "../../../Files/TextFile.txt";
-        ReadWriteFile.WriteAll(outputPath);
-        //Meny.Meny meny = new Meny.Meny();
-        //meny.ShowMenu();
-        //TemperatureData.PrintAverage();
+        Console.OutputEncoding = Encoding.UTF8;
+        Meny.Meny meny = new Meny.Meny();
+        meny.ShowMenu();
+
     }
 }

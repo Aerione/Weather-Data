@@ -27,7 +27,7 @@ namespace Väderdata___Inlämning
                 }
             }
 
-            Regex tempRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01]) (?<hours>([01]\d|2[0-3])):(?<minutes>[0-5]\d):(?<seconds>[0-5]\d),(?<indicator>\w+),(?<temp>-?([0-9]\d*(\.\d+)?)),(?<humidity>(?:100|\d{1,2}))");
+            Regex tempRegex = new Regex(@"(?<year>\d{4})-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12]\d|3[01]) (?<hours>([01]\d|2[0-3])):(?<minutes>[0-5]\d):(?<seconds>[0-5]\d),(?<indicator>\w+),(?<temp>-?([0-9]\d*(\.\d+)?)),(?<humidity>(?:100|\d{1,2}))"); //Modify temp regex
 
             if (indicator == 1)
             {
@@ -97,60 +97,60 @@ namespace Väderdata___Inlämning
             return valueTuple;
         }
 
-        public static void PrintColdestDay(List<Data> tempList)
-        {
-            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
-            var meanValues = groupedEntries.Select(group =>
-            {
-                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+        //public static void PrintColdestDay(List<Data> tempList)
+        //{
+        //    var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+        //    var meanValues = groupedEntries.Select(group =>
+        //    {
+        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
 
-                return new
-                {
-                    DateStamp = group.Key,
-                    MeanTemperature = meanTemperature,
-                    MeanHumidity = meanHumidity,
-                };
-            });
+        //        return new
+        //        {
+        //            DateStamp = group.Key,
+        //            MeanTemperature = meanTemperature,
+        //            MeanHumidity = meanHumidity,
+        //        };
+        //    });
 
-            var sortedMeans = meanValues.OrderBy(x => x.MeanTemperature);
+        //    var sortedMeans = meanValues.OrderBy(x => x.MeanTemperature);
 
-            foreach (var meanValue in sortedMeans)
-            {
-                Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
-                Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
-                Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
-                Console.WriteLine();
-            }
-        }
+        //    foreach (var meanValue in sortedMeans)
+        //    {
+        //        Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
+        //        Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
+        //        Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
+        //        Console.WriteLine();
+        //    }
+        //}
 
-        public static void PrintHumidityDay(List<Data> tempList)
-        {
-            var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
-            var meanValues = groupedEntries.Select(group =>
-            {
-                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+        //public static void PrintHumidityDay(List<Data> tempList)
+        //{
+        //    var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
+        //    var meanValues = groupedEntries.Select(group =>
+        //    {
+        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
 
-                return new
-                {
-                    DateStamp = group.Key,
-                    MeanTemperature = meanTemperature,
-                    MeanHumidity = meanHumidity,
-                };
-            });
+        //        return new
+        //        {
+        //            DateStamp = group.Key,
+        //            MeanTemperature = meanTemperature,
+        //            MeanHumidity = meanHumidity,
+        //        };
+        //    });
 
-            var sortedMeans = meanValues.OrderBy(x => x.MeanHumidity);
+        //    var sortedMeans = meanValues.OrderBy(x => x.MeanHumidity);
 
-            // Print sorted mean values
-            foreach (var meanValue in sortedMeans)
-            {
-                Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
-                Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
-                Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
-                Console.WriteLine();
-            }
-        }
+        //    // Print sorted mean values
+        //    foreach (var meanValue in sortedMeans)
+        //    {
+        //        Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
+        //        Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
+        //        Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
+        //        Console.WriteLine();
+        //    }
+        //}
 
 
         public static List<(DateTime DateStamp, float MeanTemperature, int MeanHumidity)> SortMeanValuesByDay(List<Data> tempList)
@@ -181,52 +181,52 @@ namespace Väderdata___Inlämning
             return meanValues.ToList();
         }
 
-        public static void PrintAverage()
-        {
-            List<Data> uDataList = new List<Data>();
+        //public static void PrintAverage()
+        //{
+        //    List<Data> uDataList = new List<Data>();
 
 
-            uDataList = TemperatureData.OutputData(1);
+        //    uDataList = TemperatureData.OutputData(1);
 
-            //float averageTemperature = uDataList
-            //    .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)
-            //    .Average(data => data.Temperature);
+        //    //float averageTemperature = uDataList
+        //    //    .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)
+        //    //    .Average(data => data.Temperature);
 
-            //Console.WriteLine("Average Value = " + averageTemperature);
-            //Console.ReadKey();
+        //    //Console.WriteLine("Average Value = " + averageTemperature);
+        //    //Console.ReadKey();
 
-            var groupedEntries = uDataList.GroupBy(e => e.DateTime.Date);
+        //    var groupedEntries = uDataList.GroupBy(e => e.DateTime.Date);
 
-            // Calculate mean values for each property for each date stamp
-            var meanValues = groupedEntries.Select(group =>
-            {
-                float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-                int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
-                //Mold index not totally correct
-                double moldIndex = ((meanHumidity - 78) * ((meanTemperature / 15) / 0.22));
+        //    // Calculate mean values for each property for each date stamp
+        //    var meanValues = groupedEntries.Select(group =>
+        //    {
+        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
+        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+        //        //Mold index not totally correct
+        //        double moldIndex = ((meanHumidity - 78) * ((meanTemperature / 15) / 0.22));
 
-                return new
-                {
-                    DateStamp = group.Key,
-                    MeanTemperature = meanTemperature,
-                    MeanHumidity = meanHumidity,
-                    MoldIndex = moldIndex
-                };
-            });
+        //        return new
+        //        {
+        //            DateStamp = group.Key,
+        //            MeanTemperature = meanTemperature,
+        //            MeanHumidity = meanHumidity,
+        //            MoldIndex = moldIndex
+        //        };
+        //    });
 
-            foreach (var item in meanValues)
-            {
-                Console.WriteLine("Date: " + item.DateStamp.Year + ":" + item.DateStamp.Month + ":" + item.DateStamp.Day);
-                Console.WriteLine("Mean Temperature: " + item.MeanTemperature);
-                Console.WriteLine("Mean Humidity " + item.MeanHumidity);
-                Console.WriteLine("Mold Index " + item.MoldIndex);
-                Console.WriteLine();
-            }
+        //    foreach (var item in meanValues)
+        //    {
+        //        Console.WriteLine("Date: " + item.DateStamp.Year + ":" + item.DateStamp.Month + ":" + item.DateStamp.Day);
+        //        Console.WriteLine("Mean Temperature: " + item.MeanTemperature);
+        //        Console.WriteLine("Mean Humidity " + item.MeanHumidity);
+        //        Console.WriteLine("Mold Index " + item.MoldIndex);
+        //        Console.WriteLine();
+        //    }
 
-            //foreach (Data data in uDataList)
-            //{
-            //    Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
-            //}
-        }
+        //    //foreach (Data data in uDataList)
+        //    //{
+        //    //    Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
+        //    //}
+        //}
     }
 }
