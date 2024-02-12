@@ -1,47 +1,62 @@
 Medeltemperatur sorterad efter månad (Ute):
 Månad: 6
-Temperatur: 15,847579
-Fuktighet 53
+Temperatur: 16°C
+Fuktighet 53%
+Mögelindex: 0
 Månad: 7
-Temperatur: 20,244614
-Fuktighet 52
+Temperatur: 20°C
+Fuktighet 52%
+Mögelindex: 0
 Månad: 8
-Temperatur: 18,072746
-Fuktighet 48
+Temperatur: 18°C
+Fuktighet 48%
+Mögelindex: 0
 Månad: 9
-Temperatur: 16,156067
-Fuktighet 60
+Temperatur: 16°C
+Fuktighet 60%
+Mögelindex: 0
 Månad: 10
-Temperatur: 8,177444
-Fuktighet 64
+Temperatur: 8°C
+Fuktighet 64%
+Mögelindex: 0
 Månad: 11
-Temperatur: 3,3119898
-Fuktighet 83
+Temperatur: 3°C
+Fuktighet 83%
+Mögelindex: 5,018165978518399
 Månad: 12
-Temperatur: 2,5104659
-Fuktighet 77
+Temperatur: 3°C
+Fuktighet 77%
+Mögelindex: 0
 Medelfuktighet sorterad efter månad (Inne):
 Månad: 6
-Temperatur: 24,701122
-Fuktighet 28
+Temperatur: 25°C
+Fuktighet 28%
+Mögelindex: 0
 Månad: 7
-Temperatur: 26,283714
-Fuktighet 41
+Temperatur: 26°C
+Fuktighet 41%
+Mögelindex: 0
 Månad: 8
-Temperatur: 25,567415
-Fuktighet 34
+Temperatur: 26°C
+Fuktighet 34%
+Mögelindex: 0
 Månad: 9
-Temperatur: 23,311342
-Fuktighet 41
+Temperatur: 23°C
+Fuktighet 41%
+Mögelindex: 0
 Månad: 10
-Temperatur: 22,415539
-Fuktighet 27
+Temperatur: 22°C
+Fuktighet 27%
+Mögelindex: 0
 Månad: 11
-Temperatur: 22,780891
-Fuktighet 19
+Temperatur: 23°C
+Fuktighet 19%
+Mögelindex: 0
 Månad: 12
-Temperatur: 21,836422
-Fuktighet 15
-2016-10-04 var första meteorogiska höstdagen med medeltemperaturen 8,4 C.
+Temperatur: 22°C
+Fuktighet 15%
+Mögelindex: 0
 Datum för meteorogiska årstider:
-Formeln för mögelindexen: ((luftfuktighet -78) * (Temp/15))/0,22
+2016-10-04 var första meteorogiska höstdagen med medeltemperaturen 8,4°C.
+Fullständiga villkor för meteorogisk vinter kunde inte hittas. Datumet som är närmast till att matcha är 2016-11-10, med tidigare dagar i följd.
+Uträkningsformel för mögelindex: ((luftfuktighet -78) * (Temp/15))/0,22

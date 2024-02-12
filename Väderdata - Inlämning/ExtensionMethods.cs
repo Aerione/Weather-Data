@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Väderdata___Inlämning
 {
-    internal class ExtensionMethods
+    public static class ExtensionMethods
     {
-        //Placeholder, remember to create extension methods for the assignment
+        public static string Tab(this string str)
+        {
+            return new string(str + "\t");
+        }
+
+        public static string DegreesC(this string str)
+        {
+            return new string(str + '\u00B0' + 'C');
+        }
     }
 }

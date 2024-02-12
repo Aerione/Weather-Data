@@ -36,8 +36,9 @@ namespace Väderdata___Inlämning
                 foreach (var meanValues in monthlyMeanValues)
                 {
                     streamWriter.WriteLine("Månad: " + meanValues.Item1.Month);   
-                    streamWriter.WriteLine("Temperatur: " + meanValues.Item2);
-                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3);
+                    streamWriter.WriteLine("Temperatur: " + Math.Round(meanValues.Item2).ToString().DegreesC());
+                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3 + "%");
+                    streamWriter.WriteLine("Mögelindex: " + TemperatureData.MoldIndexPercentage(meanValues.Item2, meanValues.Item3));
                 }
 
                 streamWriter.WriteLine("Medelfuktighet sorterad efter månad (Inne):");
@@ -47,51 +48,16 @@ namespace Väderdata___Inlämning
                 foreach (var meanValues in monthlyMeanValues2)
                 {
                     streamWriter.WriteLine("Månad: " + meanValues.Item1.Month);
-                    streamWriter.WriteLine("Temperatur: " + meanValues.Item2);
-                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3);
-                }
-
-                int consecutiveAutumnDays = 0;
-                List<(DateTime, float, int)> list = TemperatureData.SortMeanValuesByDay(TemperatureData.OutputData(1));
-                foreach (var entry in list)
-                {
-                    if (entry.Item2 < 10)
-                    {
-                        consecutiveAutumnDays++;
-                    }
-                    else
-                    {
-                        consecutiveAutumnDays = 0;
-                    }
-
-                    if (consecutiveAutumnDays == 5)
-                    {
-                        streamWriter.WriteLine($"{entry.Item1.AddDays(-4):yyyy-MM-dd} var första meteorogiska höstdagen med medeltemperaturen {Math.Round(entry.Item2, 2)} C.");
-                        break;
-                    }
+                    streamWriter.WriteLine("Temperatur: " + Math.Round(meanValues.Item2).ToString().DegreesC());
+                    streamWriter.WriteLine("Fuktighet " + meanValues.Item3 + "%");
+                    streamWriter.WriteLine("Mögelindex: " + TemperatureData.MoldIndexPercentage(meanValues.Item2, meanValues.Item3));
                 }
 
                 streamWriter.WriteLine("Datum för meteorogiska årstider:");
-
-                int consecutiveWinterDays = 0;
-                foreach (var entry in list)
-                {
-                    if (entry.Item2 < 0)
-                    {
-                        consecutiveWinterDays++;
-                    }
-                    else
-                    {
-                        consecutiveWinterDays = 0;
-                    }
-
-                    if (consecutiveWinterDays == 5)
-                    {
-                        streamWriter.WriteLine($"{entry.Item1.AddDays(-4):yyyy-MM-dd} var första meteorogiska vinterdagen med medeltemperaturen {Math.Round(entry.Item2, 2)} C.");
-                        break;
-                    }
-                }
-                streamWriter.WriteLine("Formeln för mögelindexen: " + "((luftfuktighet -78) * (Temp/15))/0,22");
+                streamWriter.WriteLine(TemperatureData.AutumnChecker(1));
+                streamWriter.WriteLine(TemperatureData.WinterChecker(1));
+                streamWriter.WriteLine();
+                streamWriter.WriteLine("Uträkningsformel för mögelindex: " + "((luftfuktighet -78) * (Temp/15))/0,22");
             }
         }
 

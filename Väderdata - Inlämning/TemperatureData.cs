@@ -10,6 +10,9 @@ namespace Väderdata___Inlämning
 {
     internal class TemperatureData
     {
+        public delegate string MeteorologicSeason(int indicator);
+        public static MeteorologicSeason AutumnChecker = SeasonCheckAutumn;
+        public static MeteorologicSeason WinterChecker = SeasonCheckWinter;
         public static List<Data> OutputData(int indicator)
         {
             string location = "";
@@ -97,61 +100,77 @@ namespace Väderdata___Inlämning
             return valueTuple;
         }
 
-        //public static void PrintColdestDay(List<Data> tempList)
-        //{
-        //    var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
-        //    var meanValues = groupedEntries.Select(group =>
-        //    {
-        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+        public static string SeasonCheckAutumn(int indicator)
+        { 
+            int consecutiveAutumnDays = 0;
+            var list = TemperatureData.SortMeanValuesByDay(TemperatureData.OutputData(indicator));
+            foreach (var entry in list)
+            {
+                if (entry.MeanTemperature < 10)
+                {
+                    consecutiveAutumnDays++;
+                }
+                else
+                {
+                    consecutiveAutumnDays = 0;
+                }
 
-        //        return new
-        //        {
-        //            DateStamp = group.Key,
-        //            MeanTemperature = meanTemperature,
-        //            MeanHumidity = meanHumidity,
-        //        };
-        //    });
+                if (consecutiveAutumnDays == 5)
+                {
+                    return new string($"{entry.DateStamp.AddDays(-4):yyyy-MM-dd} var första meteorogiska höstdagen med medeltemperaturen {Math.Round(entry.MeanTemperature, 2).ToString().DegreesC()}.");
+                } 
+            }
 
-        //    var sortedMeans = meanValues.OrderBy(x => x.MeanTemperature);
+            return new string("Inga matchningar kan hittas");
+        }
 
-        //    foreach (var meanValue in sortedMeans)
-        //    {
-        //        Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
-        //        Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
-        //        Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
-        //        Console.WriteLine();
-        //    }
-        //}
+        public static string SeasonCheckWinter(int indicator)
+        {
+            DateTime closestDate = DateTime.MinValue;
+            int consecutiveWinterDays = 0;
+            var list = TemperatureData.SortMeanValuesByDay(TemperatureData.OutputData(indicator));
+            foreach (var entry in list)
+            {
+                if (entry.MeanTemperature < 0)
+                {
+                    consecutiveWinterDays++;
+                }
+                else
+                {
+                    consecutiveWinterDays = 0;
+                }
 
-        //public static void PrintHumidityDay(List<Data> tempList)
-        //{
-        //    var groupedEntries = tempList.GroupBy(e => e.DateTime.Date);
-        //    var meanValues = groupedEntries.Select(group =>
-        //    {
-        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
+                if (consecutiveWinterDays == 5)
+                {
+                    return new string($"{entry.DateStamp.AddDays(-4):yyyy-MM-dd} var första meteorogiska vinterdagen med medeltemperaturen {Math.Round(entry.MeanTemperature, 2).ToString().DegreesC()}.");
 
-        //        return new
-        //        {
-        //            DateStamp = group.Key,
-        //            MeanTemperature = meanTemperature,
-        //            MeanHumidity = meanHumidity,
-        //        };
-        //    });
+                }
+                else if (consecutiveWinterDays == 4)
+                {
+                    closestDate = entry.DateStamp;
+                }
+            }
+            if (consecutiveWinterDays < 5 && closestDate != DateTime.MinValue)
+            {
+                return new string($"Fullständiga villkor för meteorogisk vinter kunde inte hittas. Datumet som är närmast till att matcha är {closestDate.AddDays(1):yyyy-MM-dd}, med tidigare dagar i följd.");
 
-        //    var sortedMeans = meanValues.OrderBy(x => x.MeanHumidity);
+            }
+            else if (consecutiveWinterDays < 5 && closestDate == DateTime.MinValue)
+            {
+                return new string("Kan tyvärr inte finna information som matchas");
+            }
 
-        //    // Print sorted mean values
-        //    foreach (var meanValue in sortedMeans)
-        //    {
-        //        Console.WriteLine($"Date: {meanValue.DateStamp:yyyy-MM-dd}");
-        //        Console.WriteLine($"Mean Temperature: {meanValue.MeanTemperature}");
-        //        Console.WriteLine($"Mean Humidity: {meanValue.MeanHumidity}");
-        //        Console.WriteLine();
-        //    }
-        //}
+            return new string("Kan tyvärr inte finna information som matchas");
+        }
 
+        public static double MoldIndexPercentage(float temperature, int humidity)
+        {
+            double moldIndex = ((humidity - 78) * (temperature / 15)) / 0.22;
+
+            moldIndex = Math.Max(0, Math.Min(100, moldIndex));
+
+            return moldIndex;
+        }
 
         public static List<(DateTime DateStamp, float MeanTemperature, int MeanHumidity)> SortMeanValuesByDay(List<Data> tempList)
         {
@@ -180,53 +199,6 @@ namespace Väderdata___Inlämning
 
             return meanValues.ToList();
         }
-
-        //public static void PrintAverage()
-        //{
-        //    List<Data> uDataList = new List<Data>();
-
-
-        //    uDataList = TemperatureData.OutputData(1);
-
-        //    //float averageTemperature = uDataList
-        //    //    .Where(data => data.DateTime.Month == 6 && data.DateTime.Day == 8 && data.DateTime.Year == 2016)
-        //    //    .Average(data => data.Temperature);
-
-        //    //Console.WriteLine("Average Value = " + averageTemperature);
-        //    //Console.ReadKey();
-
-        //    var groupedEntries = uDataList.GroupBy(e => e.DateTime.Date);
-
-        //    // Calculate mean values for each property for each date stamp
-        //    var meanValues = groupedEntries.Select(group =>
-        //    {
-        //        float meanTemperature = group.Select(e => e.Temperature).Sum() / group.Count();
-        //        int meanHumidity = group.Select(e => e.Humidity).Sum() / group.Count();
-        //        //Mold index not totally correct
-        //        double moldIndex = ((meanHumidity - 78) * ((meanTemperature / 15) / 0.22));
-
-        //        return new
-        //        {
-        //            DateStamp = group.Key,
-        //            MeanTemperature = meanTemperature,
-        //            MeanHumidity = meanHumidity,
-        //            MoldIndex = moldIndex
-        //        };
-        //    });
-
-        //    foreach (var item in meanValues)
-        //    {
-        //        Console.WriteLine("Date: " + item.DateStamp.Year + ":" + item.DateStamp.Month + ":" + item.DateStamp.Day);
-        //        Console.WriteLine("Mean Temperature: " + item.MeanTemperature);
-        //        Console.WriteLine("Mean Humidity " + item.MeanHumidity);
-        //        Console.WriteLine("Mold Index " + item.MoldIndex);
-        //        Console.WriteLine();
-        //    }
-
-        //    //foreach (Data data in uDataList)
-        //    //{
-        //    //    Console.WriteLine(data.DateTime + " " + data.Temperature + " " + data.Humidity);
-        //    //}
-        //}
+       
     }
 }
